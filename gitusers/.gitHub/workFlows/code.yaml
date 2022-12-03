@@ -1,12 +1,12 @@
-name: counter_app
+name: gitrepo_app
 
 #Triggers (events)
 on:
    push:
 
    pull_request:
-    branch:
-     -main
+    branches:
+       -main
 
 #functions (what needs to be done on events)
 jobs:
@@ -33,15 +33,15 @@ jobs:
 
   deploy:
      name: deploy
-     run: ubuntu-latest
+     runs-on: ubuntu-latest
      needs: build
 
      steps:
         - name: Download artifact
-          uses: actions/upload-artifact@v2
+          uses: actions/download-artifact@v2
           with:
             name: production-files
-            uses: ./build
+            path: ./build
 
         - name : Deploy to github pages
           uses: peaceiris/actions-gh-pages@v3
